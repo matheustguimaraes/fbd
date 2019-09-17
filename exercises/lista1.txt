@@ -1,0 +1,64 @@
+CREATE DATABASE lista_1_FBD
+
+CREATE TABLE fornecedor (
+	cod_for smallint NOT NULL,
+	nome nvarchar(50) NOT NULL,
+	ender nvarchar(50) NOT NULL,
+	cidade nvarchar(50) NOT NULL,
+	contato smallint NOT NULL,
+	CONSTRAINT fornecedor_pk PRIMARY KEY(cod_for),
+)
+
+CREATE TABLE filial (
+	cod_filial smallint NOT NULL,
+	nome nvarchar(50) NOT NULL,
+	endereco nvarchar(50) NOT NULL,
+	CONSTRAINT filiais_pk PRIMARY KEY(cod_filial)
+)
+
+CREATE TABLE vendedores (
+	matr smallint,
+	nome nvarchar(50) NOT NULL,
+	cpf smallint NOT NULL,
+	salario decimal(6, 2) NOT NULL DEFAULT 1500.00,
+	cod_filial smallint NOT NULL,
+	CONSTRAINT vendedores_pk PRIMARY KEY(matr)
+)
+
+CREATE TABLE estoque (
+	cod_item smallint NOT NULL,
+	referencia nvarchar(50) NOT NULL,
+	pr_unit_compra smallint NOT NULL,
+	pr_unit_venda smallint NOT NULL,
+	qtde smallint NOT NULL,
+	cod_for smallint NOT NULL,
+	CONSTRAINT estoque_pk PRIMARY KEY(cod_item)
+)
+
+CREATE TABLE historico (
+	cod_item smallint NOT NULL,
+	matrvend smallint NOT NULL,
+	qtde smallint NOT NULL,
+	prvenda dec(11, 2) NOT NULL,
+	dthoravenda datetime default getdate(),
+	CONSTRAINT vendas_pk PRIMARY KEY(matrvend, cod_item, dthoravenda),
+	CONSTRAINT vendas_FK FOREIGN KEY (cod_item)
+------------ Questao 1 ------------
+		REFERENCES estoque(cod_item) ON UPDATE cascade ON DELETE NO ACTION
+-----------------------------------
+)
+
+------------ Questao 2 ------------
+ALTER TABLE vendedores
+DROP CONSTRAINT vendedores_pk
+ALTER TABLE vendedores
+ADD CONSTRAINT vendedores_pk PRIMARY KEY (cpf)
+-----------------------------------
+
+------------ Questao 3a ------------
+select fo.nome as 'Nome do Fornecedor' , ve.nome as 'Nome do Vendedor'
+from vendedores ve
+join historico hi on hi.matrvend = ve.matr
+join estoque es on es.cod_item = hi.cod_item
+join fornecedor fo on fo.cod_for = es.cod_for
+-----------------------------------
