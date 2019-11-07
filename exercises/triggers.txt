@@ -1,0 +1,53 @@
+select * from vendedores
+
+INSERT INTO vendedores (matr, nome, salario, codfil, CPF)
+VALUES (2004, 'Joao', 1022, 3, 12414)
+
+create trigger trigger1
+on vendedores
+for insert
+as
+begin
+declare @valor integer
+select @valor = nome from inserted
+print @valor
+end;
+
+
+select * from vendedores
+
+select sum(salario)
+from filiais f, vendedores v
+where cod=codfil and codfil=3
+
+INSERT INTO vendedores (matr, nome, salario, codfil, CPF)
+values (2132, 'Flora', 1424, 2, 1252)
+
+
+create trigger trigger2
+on vendedores
+instead of insert
+as
+begin
+
+declare @valor integer
+declare @novosal integer
+declare @codigo_filial integer
+
+select @novosal = salario, @codigo_filial = codfil
+from inserted
+
+select @valor = sum(salario)
+from filiais f, vendedores v 
+where cod=codfil and codfil=@codigo_filial
+
+if @valor > 15000
+	begin
+	print 'valor nao pode ser maior que 15000'
+	end
+else
+	begin
+	insert into vendedores 
+	select * from inserted
+	end
+end;
