@@ -62,3 +62,10 @@ join historico hi on hi.matrvend = ve.matr
 join estoque es on es.cod_item = hi.cod_item
 join fornecedor fo on fo.cod_for = es.cod_for
 -----------------------------------
+
+------------ Questao 3b ------------
+π fornecedor.name, vendedores.name
+(estoque.cod_for = fornecedor.cod_for (fornecedor ⨝
+(historico.cod_item = estoque.cod_item (estoque ⨝ 
+(vendedores.matr = historico.matrvenda (vendedores ⨝ historico))))))
+-----------------------------------
