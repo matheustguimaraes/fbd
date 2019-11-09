@@ -1,0 +1,41 @@
+CREATE DATABASE loja_fis
+ON
+	PRIMARY
+	(
+		NAME = 'loja',
+		FILENAME = 'C:\FBD\loja.ndf',
+		SIZE = 5200KB,
+		FILEGROWTH = 1024KB
+	),
+
+	FILEGROUP loja_fg01
+	(
+		NAME = 'loja_001',
+		FILENAME = 'C:\FBD\loja_001.ndf',
+		SIZE = 1024KB,
+		FILEGROWTH = 30%
+	),
+	(
+		NAME = 'loja_002',
+		FILENAME = 'C:\FBD\loja_002.ndf',
+		SIZE = 1024KB,
+		MAXSIZE = 3072KB,
+		FILEGROWTH = 15%
+	),
+
+	FILEGROUP loja_fg02
+	(
+		NAME = 'loja_003',
+		FILENAME = 'C:\FBD\loja_003.ndf',
+		SIZE = 2048KB,
+		MAXSIZE = 5120KB,
+		FILEGROWTH = 1024KB
+	)
+
+	LOG ON
+	(
+		NAME = 'loja_log',
+		FILENAME = 'C:\FBD\loja_003.ldf',
+		SIZE = 2048KB,
+		FILEGROWTH = 10%
+	)
