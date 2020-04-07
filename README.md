@@ -1,2 +1,2 @@
-# [CK0114] Database_Fundamentals
-Exercises and source code of Database Fundamentals discipline at Federal University of Ceará (UFC)
+# [CK0114] Database Fundamentals | *Fundamentos de Banco de Dados*
+Exercises and source code of Database Fundamentals (*Fundamentos de Banco de Dados*) discipline at Federal University of Ceará (UFC)
